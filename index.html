@@ -29,6 +29,8 @@ var cursors;
 var stars;
 var score = 0;
 var scoreText;
+//var timer;
+var timerText;
 
 function create() {
     //game.add.sprite(0, 0, 'star');
@@ -71,7 +73,7 @@ function create() {
     
     //Player physics properties. Give the little guy a slight bounce
     player.body.bounce.y = 0.2;
-    player.body.gravity.y = 300;
+    player.body.gravity.y = 350;
     player.body.collideWorldBounds = true;
     
     //Our 2 animations, walking left and right
@@ -86,10 +88,12 @@ function create() {
     //Here we'll create 12 of them evenly spaced apart
     for (var i = 0; i < 12; i++){
         //Create a star inside of the 'stars' group
-        var star = stars.create(i * 70, 0, 'star');
+        var star = stars.create(i * 70, 100, 'star');
         
         //Let gravity do its things
-        star.body.gravity.y = 6;
+        //0 Gravity has stars all in one place
+        //100 Gravity gives stars bounce at different speeds
+        star.body.gravity.y = 100;
         
         //This just gives each star a slightly random bounce value
         star.body.bounce.y = 0.7 + Math.random() * 0.2;
@@ -97,6 +101,7 @@ function create() {
     
     //The scoreText displays at coordinates 16x16 the text Score: 0 and font color and size
     scoreText = game.add.text(16,16, 'score:0', { fontSize: '32px', fill: '#000'});
+    timerText = game.add.text(550,16, 'timer:00:00:00', {fontSize: '32px', fill: '#000'});
     
     //Our controls
     cursors = game.input.keyboard.createCursorKeys();
@@ -134,6 +139,8 @@ function update() {
     if (cursors.up.isDown && player.body.touching.down && hitPlatform){
         player.body.velocity.y = -350;
     }
+    
+    updateTimer();
 }
     function collectStar (player, star){
         //Removes the star from the screen
@@ -143,6 +150,20 @@ function update() {
         score += 10;
         scoreText.text = 'Score: ' + score;
     }
+    
+    function updateTimer() {    
+minutes = Math.floor(game.time.time / 60000) % 60;    
+seconds = Math.floor(game.time.time / 1000) % 60;    
+milliseconds = Math.floor(game.time.time) % 100;    
+//If any of the digits becomes a single digit number, pad it with a zero    
+if (milliseconds < 10)        
+milliseconds = '0' + milliseconds;    
+if (seconds < 10)        
+seconds = '0' + seconds;    
+if (minutes < 10)        
+minutes = '0' + minutes;    
+timerText.setText(minutes + ':'+ seconds + ':' + milliseconds);
+}
 
 </script>
 
