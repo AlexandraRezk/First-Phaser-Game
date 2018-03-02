@@ -88,7 +88,7 @@ function create() {
     //Here we'll create 12 of them evenly spaced apart
     for (var i = 0; i < 12; i++){
         //Create a star inside of the 'stars' group
-        var star = stars.create(i * 70, 100, 'star');
+        var star = stars.create(i * 70, i * (Math.random() * 50), 'star');
         
         //Let gravity do its things
         //0 Gravity has stars all in one place
@@ -96,7 +96,7 @@ function create() {
         star.body.gravity.y = 70;
         
         //This just gives each star a slightly random bounce value
-        star.body.bounce.y = 0.8 + Math.random() * 0.3;
+        star.body.bounce.y = 0.7 + Math.random() * 0.3;
     }
     
     //The scoreText displays at coordinates 16x16 the text Score: 0 and font color and size
