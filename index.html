@@ -19,6 +19,7 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create
 function preload() {
     game.load.image('background', 'assets/tinybackground.png');
     game.load.image('ground', 'assets/platform.png');
+    game.load.image('sidewalk', 'assets/BottomPlatform.png');
     game.load.image('coffee', 'assets/coffee.png');
     game.load.spritesheet('dude', 'assets/TinyBexSprite.png', 35, 48);
     
@@ -48,10 +49,10 @@ function create() {
     platforms.enableBody = true;
     
     //Here we create the ground
-    var ground = platforms.create(0, game.world.height - 64, 'ground');
+    var ground = platforms.create(0, game.world.height - 64, 'sidewalk');
     
     //Scale it to fit the width of the game (The original sprite is 400x32 in size)
-    ground.scale.setTo(2, 2);
+    //ground.scale.setTo(2, 2);
     
     //Stops the ground from falling away when you jump on it
     ground.body.immovable = true;
